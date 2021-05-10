@@ -36,4 +36,5 @@ All the problems listed have now been fixed.
 - Multiplayer fixed by watching many hours of youtube while getting sidetracked and by pure chance finding a really good video about it. (sorry Joakim the video you sent me used unity's old networking thing. This game uses a brand new API that's not even fully released yet. However it works really good and is quite easy to use)
 ## Images
 ![Screenshot from 2021-05-10 22-03-13](https://user-images.githubusercontent.com/71272158/117717849-a0489e80-b1db-11eb-92cc-6730af64aea3.png)
-![UI_Test](https://www.youtube.com/watch?v=fm58hkLQINw)
+
+[![Video](http://img.youtube.com/vi/fm58hkLQINw/0.jpg)](http://www.youtube.com/watch?v=fm58hkLQINw "UI_test")
