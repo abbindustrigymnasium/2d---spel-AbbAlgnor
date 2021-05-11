@@ -2,6 +2,8 @@
 ## Quick info
 **_School shooter_** is a game where you eh... Shoot each other in school... 
 But don't worry after some consulting with Joakim we both felt that it would be a good idea to use paintball guns instead of real guns.... Cause ya know the whole school setting
+
+Planner at [trello](https://trello.com/b/TbcSX0QM/school-paintball)
 ## Big Plans
 ###### _Just a heads up, this is written just after doing some quick research. No actuall testing has been done yet._
 ### Plans in list (in priority)
