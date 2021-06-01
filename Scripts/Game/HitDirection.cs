@@ -10,6 +10,7 @@ public class HitDirection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //this for some reason only partly works, the x and z position is right, and the rotation is right, but for some reason the y value is relative to the player
         GameObject gun = this.transform.parent.transform.parent.parent.transform.gameObject;
         hitPoint = gun.GetComponent<GunScript>().hit;
 

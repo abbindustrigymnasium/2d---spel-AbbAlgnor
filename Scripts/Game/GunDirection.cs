@@ -22,7 +22,7 @@ public class GunDirection : NetworkBehaviour
         {
             var target_rot = Quaternion.LookRotation(LookAtPoint.LookingAtPoint - transform.position);
             var delta = Quaternion.Angle(transform.rotation, target_rot);
-            if (delta > 0.0f)
+            if (delta > 0.0f)   //smoohly makes the weapon look at the hitpoint
             {
                 var t = Mathf.SmoothDampAngle(delta, 0.0f, ref AngularVelocity, RotateSmoothTime);
                 t = 1.0f - t / delta;

@@ -22,7 +22,7 @@ public class GunScript : NetworkBehaviour
     }
     void shoot()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        if (Physics.Raycast(transform.position, transform.forward, out hit)) //preatty self explanatory, shoots a raycast and shows a debug gizmo
         {
             Debug.Log(hit.transform.name);
             TakeDamage target = hit.transform.GetComponent<TakeDamage>();

@@ -5,6 +5,11 @@ using MLAPI;
 
 public class TestMovement : NetworkBehaviour
 {
+
+    //this is a test script to test multiplayer,not actually used anymore.
+
+
+
     Vector2 Direction;
     Vector3 Movement;
     public Camera camera;
