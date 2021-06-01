@@ -70,7 +70,7 @@ public class PlayerControllerV3 : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!IsLocalPlayer)
+        if (!IsLocalPlayer) //just simply checks if the script is run by a local player, otherwise turn of character controller and do nothing
         {
             controller = GetComponent<CharacterController>();
             controller.enabled = false;
@@ -98,18 +98,18 @@ public class PlayerControllerV3 : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsLocalPlayer)
+        if (!IsLocalPlayer)//checks if is run by a local player
         {
             return;
         }
-        movement();
-        inputs();
-        animations();
+        movement(); //all the movement stuff
+        inputs();   //all the inputs, would ideally be run before movement, but that causes a few issues i cant bother fixing.
+        animations();   //sets the animations
     }
 
     void FixedUpdate()
     {
-        if (FirstFrame)
+        if (FirstFrame) //this is a supid and retarted way of doing it, but it is the only way i found that actually works. it sets the players spawnpoing, host and client starts on different sides of the map.
         {
             bool mode = PlayerPrefs.GetInt("Mode") == 0 ? false : true;
             if (mode)
@@ -126,7 +126,7 @@ public class PlayerControllerV3 : NetworkBehaviour
         FirstFrame = false;
     }
 
-    void inputs()
+    void inputs() // gets the inputs, mouse inputs is directly accesed in the movement part.
     {
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         inputDir = input.normalized;
@@ -147,33 +147,33 @@ public class PlayerControllerV3 : NetworkBehaviour
     void movement()
     {
         rotation();     //gets and sets the players rotation
-        translation();
+        translation();  //sets the players movement.
     }
-    void rotation()
+    void rotation()  //gets and sets the players rotation
     {
         cameraInput += new Vector2(-Input.GetAxisRaw("Mouse Y"), Input.GetAxisRaw("Mouse X"));
         cameraInput = new Vector2(Mathf.Clamp(cameraInput.x, -89, 89), cameraInput.y);
         transform.eulerAngles = cameraInput * new Vector2(0, 1);
     }
-    void translation()
+    void translation()  //sets the players movement.
     {
-        velocityY += gravity * Time.deltaTime;
+        velocityY += gravity * Time.deltaTime;  //adds gravity to the players y velocity
 
-        Vector2 targetSpeed = new Vector2(input.x * (running ? runStafeSpeed : walkStrafeSpeed), input.y * (running ? runSpeed : walkSpeed));
+        Vector2 targetSpeed = new Vector2(input.x * (running ? runStafeSpeed : walkStrafeSpeed), input.y * (running ? runSpeed : walkSpeed));   //sets the players target speed, runspeed/walkspeed/strafespeed are all configurable in the inspector
         Vector2 targetSpeedDir = targetSpeed.normalized;
 
-        currentSpeedX = Mathf.SmoothDamp(currentSpeedX, targetSpeed.x * Mathf.Abs(targetSpeedDir.x), ref speedSmoothVelocityX, SpeedState(speedSmoothTime));
-        currentSpeedZ = Mathf.SmoothDamp(currentSpeedZ, targetSpeed.y * Mathf.Abs(targetSpeedDir.y), ref speedSmoothVelocityZ, SpeedState(speedSmoothTime));
+        currentSpeedX = Mathf.SmoothDamp(currentSpeedX, targetSpeed.x * Mathf.Abs(targetSpeedDir.x), ref speedSmoothVelocityX, SpeedState(speedSmoothTime));    //smoothly changes the players movement, without it the player just feels bad
+        currentSpeedZ = Mathf.SmoothDamp(currentSpeedZ, targetSpeed.y * Mathf.Abs(targetSpeedDir.y), ref speedSmoothVelocityZ, SpeedState(speedSmoothTime));    //smoothly changes the players movement, without it the player just feels bad
 
 
 
-        Vector3 velocity = transform.forward * currentSpeedZ + Vector3.up * velocityY + transform.right * currentSpeedX;
+        Vector3 velocity = transform.forward * currentSpeedZ + Vector3.up * velocityY + transform.right * currentSpeedX;    //stores all the current velocities in a single vector3
 
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime); //moves the player
 
         currentSpeed = new Vector2(controller.velocity.x, controller.velocity.z).magnitude;
 
-        if (controller.isGrounded)
+        if (controller.isGrounded)  //used for setting animations
         {
             if (velocityY < hardLandSpeed)
             {
@@ -189,7 +189,7 @@ public class PlayerControllerV3 : NetworkBehaviour
         }
     }
 
-    float SpeedState(float value)
+    float SpeedState(float value)   //gets wheither the player is grounded or not, controlls the players controll percentage
     {
         if (controller.isGrounded)
         {
@@ -200,7 +200,7 @@ public class PlayerControllerV3 : NetworkBehaviour
             return value / airControllPercent;
         }
     }
-    void jump()
+    void jump() //just a simple gunscript, pretty self explanatory
     {
         if (controller.isGrounded)
         {
@@ -210,7 +210,7 @@ public class PlayerControllerV3 : NetworkBehaviour
         }
     }
 
-    void LateUpdate()
+    void LateUpdate()   //updates the rig, used for the spine when looking down etc, needs to be run in LateUpdate() due to how animations in unity works.
     {
         if (!IsLocalPlayer)
         {
@@ -227,22 +227,22 @@ public class PlayerControllerV3 : NetworkBehaviour
 
         spineRotation.y = spineRotation.y - (spineRotation.y - rotation.y);
 
-        if (spineRotation.x > 50)
+        if (spineRotation.x > 50)   //needs to be done to avoid a weird issue with euler angles, ideally i would use quaternions, but i dont really understand them.
         {
             spineRotation.x -= 180;
         }
-        if (Mathf.Abs(spineRotation.y - rotation.y) > 90)
+        if (Mathf.Abs(spineRotation.y - rotation.y) > 90)   //needs to be done to avoid a weird issue with euler angles, ideally i would use quaternions, but i dont really understand them.
         {
             spineRotation.y += 180;
         }
-        spine.eulerAngles = spineRotation;
-        chest.eulerAngles = chestRotation;
+        spine.eulerAngles = spineRotation;  //applies the angle offset to the bones.
+        chest.eulerAngles = chestRotation;  //applies the angle offset to the bones.
         //chest.LookAt(ThirdPersonCamera.LookingAtPoint);
         //head.eulerAngles = headRotation;
         //root.eulerAngles = new Vector3 (-90f, cameraAngleOffset(), 0f) + transform.eulerAngles;
-        armature.localPosition = new Vector3(0, 0.9819709f, -cameraInput.x / CameraAdjustmentDivisor);
+        armature.localPosition = new Vector3(0, 0.9819709f, -cameraInput.x / CameraAdjustmentDivisor);  //offsets the players body wihtin the character controller to avoid clipping in walls when looking forward/down/up
     }
-    void animations()
+    void animations()   //set the walkstate
     {
         float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * 0.5f);
         anim.SetFloat("WalkState", animationSpeedPercent, speedSmoothTime, Time.deltaTime);

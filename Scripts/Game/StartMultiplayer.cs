@@ -23,17 +23,17 @@ public class StartMultiplayer : MonoBehaviour
     }
     void StartClient()
     {
-        NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = PlayerPrefs.GetString("IP");
-        NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectPort = PlayerPrefs.GetInt("JoinPort");
+        NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = PlayerPrefs.GetString("IP");    //gets the IP the character inputed in the main menu scene
+        NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectPort = PlayerPrefs.GetInt("JoinPort");    //gets the Port the character inputed in the main menu scene
         
         Debug.Log("Started Client");
-        NetworkManager.Singleton.StartClient();
+        NetworkManager.Singleton.StartClient(); //starts the client with the selecter port and ip.
     }
     public void StartHost()
     {
-        NetworkManager.Singleton.GetComponent<UNetTransport>().ServerListenPort = PlayerPrefs.GetInt("HostPort");
+        NetworkManager.Singleton.GetComponent<UNetTransport>().ServerListenPort = PlayerPrefs.GetInt("HostPort");   //gets the Port the character inputed in the main menu scene
 
         Debug.Log("Started Host");
-        NetworkManager.Singleton.StartHost();
+        NetworkManager.Singleton.StartHost();   //start a host with the selected port. will only work on the local network unless the selected port is port forwared
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MainMenuManager : MonoBehaviour
 {
+    //im not going to comment everything, google playerPerfs if needed.
+    
+    //sets the playerperfs to all the supplied values from the main menu. Functions are called directly from the input fields/buttons/sliders.
     public void Exit()
     {
         Debug.Log("Quit");
