@@ -14,7 +14,7 @@ public class LookAtPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
+        RaycastHit hit; //sets the public point that the camera is looking at that all the other script uses, 
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
             LookingAtPoint = hit.point;

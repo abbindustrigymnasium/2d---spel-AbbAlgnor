@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//this script is not used, left from when the game was thirdperson.
+
+
+
 public class ThirdPersonCamera : MonoBehaviour
 {
     [SerializeField]
@@ -57,7 +62,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
         transform.position = new Vector3(0, 0, 0);
 
-        if (PlayerControllerV2.Aiming)
+        if (PlayerControllerV2.Aiming) // changes the camera offset and fov smoothly when aiming/not aiming
         {
             currentFov = Mathf.SmoothDamp(currentFov, aimFov, ref smoothVelocityFov, fovSmoothTime);
 
@@ -72,6 +77,7 @@ public class ThirdPersonCamera : MonoBehaviour
             Camera.main.fieldOfView = currentFov;
         }
 
+        // this is an extremely dumb way of doing this
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (cameraSide == 1)
@@ -110,7 +116,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-        RaycastHit hit;
+        RaycastHit hit; //point the camera is looking at
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
             LookingAtPoint = hit.point;
